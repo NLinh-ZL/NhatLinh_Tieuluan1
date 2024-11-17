@@ -67,18 +67,23 @@ namespace NhatLinh_Tieuluan1
             {
                 foreach (DataColumn col in dataTable.Columns)
                 {
-                    // Chỉ mã hóa các cột MATKHAU và LUONG
-                    if (col.ColumnName.Equals("MATKHAU", StringComparison.OrdinalIgnoreCase))
+                    if (row[col] != DBNull.Value)
                     {
-                        if (row[col] != DBNull.Value)
+                        if (col.ColumnName.Equals("MATKHAU", StringComparison.OrdinalIgnoreCase))
                         {
                             string originalValue = row[col].ToString();
-                            row[col] = CaesarCipherEncrypt36(originalValue, key); // Mã hóa
+                            row[col] = CaesarCipherEncrypt36(originalValue, key); // Mã hóa MATKHAU
+                        }
+                        else if (col.ColumnName.Equals("LUONG", StringComparison.OrdinalIgnoreCase))
+                        {
+                            string originalValue = Convert.ToDecimal(row[col]).ToString("F2");
+                            row[col] = CaesarCipherEncrypt36(originalValue, key); // Mã hóa LUONG
                         }
                     }
                 }
             }
         }
+
 
         private void DecryptDataTable(DataTable dataTable, int key)
         {
@@ -86,20 +91,35 @@ namespace NhatLinh_Tieuluan1
             {
                 foreach (DataColumn col in dataTable.Columns)
                 {
-                    string decryptedValue = row[col].ToString();
-                    // Chỉ giải mã các cột MATKHAU và LUONG
-
-                    if (col.ColumnName.Equals("MATKHAU", StringComparison.OrdinalIgnoreCase))
+                    if (row[col] != DBNull.Value)
                     {
-                        if (row[col] != DBNull.Value)
+                        if (col.ColumnName.Equals("MATKHAU", StringComparison.OrdinalIgnoreCase))
                         {
                             string encryptedValue = row[col].ToString();
-                            row[col] = CaesarCipherDecrypt36(encryptedValue, key); // Giải mã
+                            row[col] = CaesarCipherDecrypt36(encryptedValue, key); // Giải mã MATKHAU
+                        }
+                        else if (col.ColumnName.Equals("LUONG", StringComparison.OrdinalIgnoreCase))
+                        {
+                            string encryptedValue = row[col].ToString();
+                            string decryptedValue = CaesarCipherDecrypt36(encryptedValue, key);
+
+                            decimal originalValue;
+                            if (decimal.TryParse(decryptedValue, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out originalValue))
+
+                            {
+                                row[col] = originalValue; // Chuyển về số thập phân
+                            }
+                            else
+                            {
+                                MessageBox.Show("Không thể chuyển '" + decryptedValue + "' về kiểu số.", "Lỗi định dạng", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                            }
                         }
                     }
                 }
             }
         }
+
 
         private string CaesarCipherEncrypt36(string input, int key)
         {
