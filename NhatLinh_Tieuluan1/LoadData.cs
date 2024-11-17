@@ -68,8 +68,7 @@ namespace NhatLinh_Tieuluan1
                 foreach (DataColumn col in dataTable.Columns)
                 {
                     // Chỉ mã hóa các cột MATKHAU và LUONG
-                    if (col.ColumnName.Equals("MATKHAU", StringComparison.OrdinalIgnoreCase) ||
-                        col.ColumnName.Equals("LUONG", StringComparison.OrdinalIgnoreCase))
+                    if (col.ColumnName.Equals("MATKHAU", StringComparison.OrdinalIgnoreCase))
                     {
                         if (row[col] != DBNull.Value)
                         {
@@ -87,39 +86,15 @@ namespace NhatLinh_Tieuluan1
             {
                 foreach (DataColumn col in dataTable.Columns)
                 {
+                    string decryptedValue = row[col].ToString();
                     // Chỉ giải mã các cột MATKHAU và LUONG
-                    if (col.ColumnName.Equals("MATKHAU", StringComparison.OrdinalIgnoreCase) ||
-                        col.ColumnName.Equals("LUONG", StringComparison.OrdinalIgnoreCase))
+
+                    if (col.ColumnName.Equals("MATKHAU", StringComparison.OrdinalIgnoreCase))
                     {
                         if (row[col] != DBNull.Value)
                         {
                             string encryptedValue = row[col].ToString();
-                            string decryptedValue = CaesarCipherDecrypt36(encryptedValue, key);
-                            if (col.DataType == typeof(decimal) || col.DataType == typeof(double) || col.DataType == typeof(float))
-                            {
-                                // Chuyển chuỗi giải mã về số
-                                decimal numericValue;
-
-                                bool isDecimal = decimal.TryParse(decryptedValue, out numericValue);
-
-                                if (isDecimal)
-                                {
-                                    // Nếu chuyển đổi thành công, gán giá trị vào ô tương ứng
-                                    row[col] = numericValue;
-                                }
-                                else
-                                {
-                                    // Nếu không chuyển đổi được, hiển thị thông báo lỗi hoặc xử lý lỗi
-                                    MessageBox.Show("Lỗi chuyển đổi giá trị: ");
-
-                                    // Gán giá trị mặc định hoặc giá trị null
-                                    row[col] = DBNull.Value;
-                                }
-                            }
-                            else
-                            {
-                                row[col] = decryptedValue;
-                            }
+                            row[col] = CaesarCipherDecrypt36(encryptedValue, key); // Giải mã
                         }
                     }
                 }
@@ -197,6 +172,7 @@ namespace NhatLinh_Tieuluan1
                 EncryptDataTable(dataTable, key); 
                 btnEncrypt.Enabled = false;
                 btnDecrypt.Enabled = true;
+                txtKey.Enabled = false;
             }
 
         }
@@ -214,8 +190,9 @@ namespace NhatLinh_Tieuluan1
             {
                 DataTable dataTable = (DataTable)dataGridView1.DataSource;
                 DecryptDataTable(dataTable, key); 
-                btnEncrypt.Enabled = false;
-                btnDecrypt.Enabled = true;
+                btnEncrypt.Enabled = true;
+                btnDecrypt.Enabled = false;
+                txtKey.Enabled = true;
             }
         }
     }
