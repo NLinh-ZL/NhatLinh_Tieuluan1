@@ -67,5 +67,12 @@ namespace NhatLinh_Tieuluan1
                 }
             }
         }
+
+        private void btn_dk_Click(object sender, EventArgs e)
+        {
+            Dangky dk = new Dangky();
+            dk.Show();
+            this.Hide();
+        }
     }
 }

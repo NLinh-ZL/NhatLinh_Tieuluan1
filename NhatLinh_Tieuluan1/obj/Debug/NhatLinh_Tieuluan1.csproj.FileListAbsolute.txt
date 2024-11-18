@@ -21,3 +21,4 @@ D:\Study_HuFi\HK7\TH_BMHTTT\TieuLuan\NhatLinh_Tieuluan1\NhatLinh_Tieuluan1\obj\D
 D:\Study_HuFi\HK7\TH_BMHTTT\TieuLuan\NhatLinh_Tieuluan1\NhatLinh_Tieuluan1\obj\Debug\NhatLinh_Tieuluan1.Properties.Resources.resources
 D:\Study_HuFi\HK7\TH_BMHTTT\TieuLuan\NhatLinh_Tieuluan1\NhatLinh_Tieuluan1\obj\Debug\NhatLinh_Tieuluan1.csproj.GenerateResource.Cache
 D:\Study_HuFi\HK7\TH_BMHTTT\TieuLuan\NhatLinh_Tieuluan1\NhatLinh_Tieuluan1\obj\Debug\NhatLinh_Tieuluan1.NV_MHNhan.resources
+D:\Study_HuFi\HK7\TH_BMHTTT\TieuLuan\NhatLinh_Tieuluan1\NhatLinh_Tieuluan1\obj\Debug\NhatLinh_Tieuluan1.Dangky.resources
