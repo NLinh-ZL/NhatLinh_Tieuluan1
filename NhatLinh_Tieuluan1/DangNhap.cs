@@ -53,8 +53,12 @@ namespace NhatLinh_Tieuluan1
                     OracleConnection c = Database.Get_Connect();
                     MessageBox.Show("Đăng nhập thành công " + c.ServerVersion);
 
-                    LoadData loadDataForm = new LoadData();
-                    loadDataForm.Show();
+                    //LoadData loadDataForm = new LoadData();
+                    //loadDataForm.Show();
+                    //this.Hide();
+
+                    NV_MHNhan mhNhan = new NV_MHNhan();
+                    mhNhan.Show();
                     this.Hide();
                 }
                 else

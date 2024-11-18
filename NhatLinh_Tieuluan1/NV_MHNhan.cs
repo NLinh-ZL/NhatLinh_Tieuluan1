@@ -11,24 +11,23 @@ using System.Windows.Forms;
 
 namespace NhatLinh_Tieuluan1
 {
-    public partial class LoadData : Form
+    public partial class NV_MHNhan : Form
     {
-        public LoadData()
+        public NV_MHNhan()
         {
             InitializeComponent();
         }
 
-        private void LoadData_Load(object sender, EventArgs e)
+        private void NV_MHNhan_Load(object sender, EventArgs e)
         {
-            txtKey.Value = 3;
+            txtKey.Value = 5;
             LoadDataToGrid(applyEncryption: true);
             btnEncrypt.Enabled = false;
             btnDecrypt.Enabled = true;
             txtKey.Enabled = false;
-
         }
 
-        private void LoadDataToGrid(bool applyEncryption = false, int key = 3)
+        private void LoadDataToGrid(bool applyEncryption = false, int key = 5)
         {
             try
             {
@@ -76,8 +75,6 @@ namespace NhatLinh_Tieuluan1
             }
         }
 
-
-
         private void EncryptDataTable(DataTable dataTable, int key)
         {
             foreach (DataRow row in dataTable.Rows)
@@ -89,7 +86,7 @@ namespace NhatLinh_Tieuluan1
                         if (col.ColumnName.Equals("MATKHAU", StringComparison.OrdinalIgnoreCase))
                         {
                             string originalValue = row[col].ToString();
-                            row[col] = CaesarCipherEncrypt36(originalValue, key); // Mã hóa MATKHAU
+                            row[col] = MultiplicativeEncrypt(originalValue, key); // Mã hóa MATKHAU
                         }
                         //else if (col.ColumnName.Equals("LUONG", StringComparison.OrdinalIgnoreCase))
                         //{
@@ -113,7 +110,7 @@ namespace NhatLinh_Tieuluan1
                         if (col.ColumnName.Equals("MATKHAU", StringComparison.OrdinalIgnoreCase))
                         {
                             string encryptedValue = row[col].ToString();
-                            row[col] = CaesarCipherDecrypt36(encryptedValue, key); // Giải mã MATKHAU
+                            row[col] = MultiplicativeDecrypt(encryptedValue, key); // Giải mã MATKHAU
                         }
                         //else if (col.ColumnName.Equals("LUONG", StringComparison.OrdinalIgnoreCase))
                         //{
@@ -138,9 +135,14 @@ namespace NhatLinh_Tieuluan1
         }
 
 
-        private string CaesarCipherEncrypt36(string input, int key)
+        private string MultiplicativeEncrypt(string input, int key)
         {
             const string Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            if (GCD(key, 36) != 1)
+            {
+                throw new Exception("Key không hợp lệ. Phải là số nguyên tố cùng nhau với 36.");
+            }
+
             StringBuilder encrypted = new StringBuilder();
 
             foreach (char c in input.ToUpper())
@@ -148,7 +150,7 @@ namespace NhatLinh_Tieuluan1
                 int index = Alphabet.IndexOf(c);
                 if (index != -1)
                 {
-                    encrypted.Append(Alphabet[(index + key) % 36]);
+                    encrypted.Append(Alphabet[(index * key) % 36]);
                 }
                 else
                 {
@@ -159,9 +161,15 @@ namespace NhatLinh_Tieuluan1
             return encrypted.ToString();
         }
 
-        private string CaesarCipherDecrypt36(string input, int key)
+        private string MultiplicativeDecrypt(string input, int key)
         {
             const string Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            if (GCD(key, 36) != 1)
+            {
+                throw new Exception("Key không hợp lệ. Phải là số nguyên tố cùng nhau với 36.");
+            }
+
+            int inverseKey = ModularInverse(key, 36);
             StringBuilder decrypted = new StringBuilder();
 
             foreach (char c in input.ToUpper())
@@ -169,7 +177,7 @@ namespace NhatLinh_Tieuluan1
                 int index = Alphabet.IndexOf(c);
                 if (index != -1)
                 {
-                    int newIndex = (index - key + 36) % 36;
+                    int newIndex = ((index * inverseKey) % 36 + 36) % 36;
                     decrypted.Append(Alphabet[newIndex]);
                 }
                 else
@@ -179,6 +187,31 @@ namespace NhatLinh_Tieuluan1
             }
 
             return decrypted.ToString();
+        }
+
+        // Tìm nghịch đảo modular
+        private int ModularInverse(int a, int m)
+        {
+            for (int x = 1; x < m; x++)
+            {
+                if ((a * x) % m == 1)
+                {
+                    return x;
+                }
+            }
+            throw new Exception("Không tìm thấy nghịch đảo của " + a + " trong modulo " + m);
+        }
+
+        // Tính GCD
+        private int GCD(int a, int b)
+        {
+            while (b != 0)
+            {
+                int temp = b;
+                b = a % b;
+                a = temp;
+            }
+            return a;
         }
 
         private void btn_logout_Click(object sender, EventArgs e)
@@ -202,16 +235,23 @@ namespace NhatLinh_Tieuluan1
                 MessageBox.Show("Khóa phải nằm trong khoảng từ 1 đến 36.", "Lỗi khóa", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            if (GCD(key, 36) != 1)
+            {
+                MessageBox.Show("Key không hợp lệ. Phải là số nguyên tố cùng nhau với 36. (5, 7, 11, 13, 17, 19, 23, 25, 29, 31, 35)",
+                                "Lỗi Key",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                return;
+            }
 
             if (dataGridView1.DataSource != null && dataGridView1.DataSource is DataTable)
             {
                 DataTable dataTable = (DataTable)dataGridView1.DataSource;
-                EncryptDataTable(dataTable, key); 
+                EncryptDataTable(dataTable, key);
                 btnEncrypt.Enabled = false;
                 btnDecrypt.Enabled = true;
                 txtKey.Enabled = false;
             }
-
         }
 
         private void btnDecrypt_Click(object sender, EventArgs e)
@@ -222,21 +262,29 @@ namespace NhatLinh_Tieuluan1
                 MessageBox.Show("Khóa phải nằm trong khoảng từ 1 đến 36.", "Lỗi khóa", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            if (GCD(key, 36) != 1)
+            {
+                MessageBox.Show("Key không hợp lệ. Phải là số nguyên tố cùng nhau với 36. (5, 7, 11, 13, 17, 19, 23, 25, 29, 31, 35)",
+                                "Lỗi Key",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                return;
+            }
 
             if (dataGridView1.DataSource != null && dataGridView1.DataSource is DataTable)
             {
                 DataTable dataTable = (DataTable)dataGridView1.DataSource;
-                DecryptDataTable(dataTable, key); 
+                DecryptDataTable(dataTable, key);
                 btnEncrypt.Enabled = true;
                 btnDecrypt.Enabled = false;
                 txtKey.Enabled = true;
             }
         }
 
-        private void txt_mhnhan_Click(object sender, EventArgs e)
+        private void txt_mhcong_Click(object sender, EventArgs e)
         {
-            NV_MHNhan mhNhan = new NV_MHNhan();
-            mhNhan.Show();
+            LoadData loadDataForm = new LoadData();
+            loadDataForm.Show();
             this.Hide();
         }
     }

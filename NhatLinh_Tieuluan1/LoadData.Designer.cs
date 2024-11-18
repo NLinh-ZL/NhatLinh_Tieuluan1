@@ -35,6 +35,7 @@
             this.btnEncrypt = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.txtKey = new System.Windows.Forms.NumericUpDown();
+            this.txt_mhnhan = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtKey)).BeginInit();
             this.SuspendLayout();
@@ -43,11 +44,11 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(332, 27);
+            this.label1.Location = new System.Drawing.Point(187, 24);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(434, 46);
+            this.label1.Size = new System.Drawing.Size(717, 46);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Danh Sách Nhân Viên";
+            this.label1.Text = "Danh Sách Nhân Viên (mã hóa cộng)";
             // 
             // dataGridView1
             // 
@@ -106,11 +107,22 @@
             this.txtKey.Size = new System.Drawing.Size(75, 27);
             this.txtKey.TabIndex = 9;
             // 
+            // txt_mhnhan
+            // 
+            this.txt_mhnhan.Location = new System.Drawing.Point(798, 424);
+            this.txt_mhnhan.Name = "txt_mhnhan";
+            this.txt_mhnhan.Size = new System.Drawing.Size(141, 46);
+            this.txt_mhnhan.TabIndex = 10;
+            this.txt_mhnhan.Text = "Mã hóa nhân";
+            this.txt_mhnhan.UseVisualStyleBackColor = true;
+            this.txt_mhnhan.Click += new System.EventHandler(this.txt_mhnhan_Click);
+            // 
             // LoadData
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1117, 482);
+            this.Controls.Add(this.txt_mhnhan);
             this.Controls.Add(this.txtKey);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnEncrypt);
@@ -137,5 +149,6 @@
         private System.Windows.Forms.Button btnEncrypt;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown txtKey;
+        private System.Windows.Forms.Button txt_mhnhan;
     }
 }

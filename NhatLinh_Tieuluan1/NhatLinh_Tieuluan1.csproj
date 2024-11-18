@@ -62,6 +62,12 @@
     <Compile Include="LoadData.Designer.cs">
       <DependentUpon>LoadData.cs</DependentUpon>
     </Compile>
+    <Compile Include="NV_MHNhan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NV_MHNhan.Designer.cs">
+      <DependentUpon>NV_MHNhan.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="DangNhap.resx">
@@ -69,6 +75,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LoadData.resx">
       <DependentUpon>LoadData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NV_MHNhan.resx">
+      <DependentUpon>NV_MHNhan.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
