@@ -45,16 +45,13 @@ namespace NhatLinh_Tieuluan1
                         conn.Open();
                     }
 
-                    // Gọi hàm không tham số đầu vào
                     OracleCommand cmd = new OracleCommand("BEGIN :nhanVienCursor := nhatlinh_QLSP.F_GetNhanVienData; END;", conn);
                     cmd.CommandType = CommandType.Text;
 
-                    // Khai báo tham số đầu ra cho SYS_REFCURSOR
                     OracleParameter outParam = new OracleParameter("nhanVienCursor", OracleDbType.RefCursor);
                     outParam.Direction = ParameterDirection.Output;
                     cmd.Parameters.Add(outParam);
 
-                    // Thực thi hàm và lấy con trỏ kết quả
                     using (OracleDataReader reader = cmd.ExecuteReader())
                     {
                         DataTable dataTable = new DataTable();
@@ -65,7 +62,6 @@ namespace NhatLinh_Tieuluan1
                             EncryptDataTable(dataTable, key);
                         }
 
-                        // Gán dữ liệu cho DataGridView
                         dataGridView1.DataSource = dataTable;
                     }
                 }
@@ -89,13 +85,8 @@ namespace NhatLinh_Tieuluan1
                         if (col.ColumnName.Equals("MATKHAU", StringComparison.OrdinalIgnoreCase))
                         {
                             string originalValue = row[col].ToString();
-                            row[col] = CaesarCipherEncrypt36(originalValue, key); // Mã hóa MATKHAU
+                            row[col] = CaesarCipherEncrypt36(originalValue, key);
                         }
-                        //else if (col.ColumnName.Equals("LUONG", StringComparison.OrdinalIgnoreCase))
-                        //{
-                        //    string originalValue = Convert.ToDecimal(row[col]).ToString("F2");
-                        //    row[col] = CaesarCipherEncrypt36(originalValue, key); // Mã hóa LUONG
-                        //}
                     }
                 }
             }
@@ -113,25 +104,8 @@ namespace NhatLinh_Tieuluan1
                         if (col.ColumnName.Equals("MATKHAU", StringComparison.OrdinalIgnoreCase))
                         {
                             string encryptedValue = row[col].ToString();
-                            row[col] = CaesarCipherDecrypt36(encryptedValue, key); // Giải mã MATKHAU
+                            row[col] = CaesarCipherDecrypt36(encryptedValue, key);
                         }
-                        //else if (col.ColumnName.Equals("LUONG", StringComparison.OrdinalIgnoreCase))
-                        //{
-                        //    string encryptedValue = row[col].ToString();
-                        //    string decryptedValue = CaesarCipherDecrypt36(encryptedValue, key);
-
-                        //    decimal originalValue;
-                        //    if (decimal.TryParse(decryptedValue, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out originalValue))
-
-                        //    {
-                        //        row[col] = originalValue; // Chuyển về số thập phân
-                        //    }
-                        //    else
-                        //    {
-                        //        MessageBox.Show("Không thể chuyển '" + decryptedValue + "' về kiểu số.", "Lỗi định dạng", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                        //    }
-                        //}
                     }
                 }
             }
@@ -152,7 +126,7 @@ namespace NhatLinh_Tieuluan1
                 }
                 else
                 {
-                    encrypted.Append(c); // Giữ nguyên nếu không thuộc bảng mã
+                    encrypted.Append(c);
                 }
             }
 
@@ -174,7 +148,7 @@ namespace NhatLinh_Tieuluan1
                 }
                 else
                 {
-                    decrypted.Append(c); // Giữ nguyên nếu không thuộc bảng mã
+                    decrypted.Append(c);
                 }
             }
 

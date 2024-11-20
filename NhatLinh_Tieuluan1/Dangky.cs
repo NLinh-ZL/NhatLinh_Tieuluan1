@@ -22,10 +22,9 @@ namespace NhatLinh_Tieuluan1
         {
             string newUser = txt_user.Text;
             string newPassword = txt_pass.Text;
-            string dataOwner = "nhatlinh_QLSP"; // Tài khoản sở hữu dữ liệu
-            string tableName = "NHANVIEN"; // Bảng cần cấp quyền
+            string dataOwner = "nhatlinh_QLSP";
+            string tableName = "NHANVIEN";
 
-            // Kiểm tra thông tin nhập
             if (string.IsNullOrEmpty(newUser) || string.IsNullOrEmpty(newPassword))
             {
                 MessageBox.Show("Vui lòng điền đầy đủ thông tin.");
@@ -34,7 +33,6 @@ namespace NhatLinh_Tieuluan1
 
             try
             {
-                // Đảm bảo thông tin kết nối với admin_user
                 Database.Set_Database("localhost", "1521", "orcl", "admin_user", "123");
 
                 if (!Database.Connect())
@@ -43,17 +41,14 @@ namespace NhatLinh_Tieuluan1
                     return;
                 }
 
-                // Gọi hàm PL/SQL để tạo user và cấp quyền
                 OracleCommand cmd = Database.Get_Connect().CreateCommand();
                 cmd.CommandText = "BEGIN admin_user.Pr_create_user(:p_new_user, :p_new_password, :p_data_owner, :p_table_name); END;";
 
-                // Thêm các tham số
                 cmd.Parameters.Add("p_new_user", OracleDbType.Varchar2).Value = newUser;
                 cmd.Parameters.Add("p_new_password", OracleDbType.Varchar2).Value = newPassword;
                 cmd.Parameters.Add("p_data_owner", OracleDbType.Varchar2).Value = dataOwner;
                 cmd.Parameters.Add("p_table_name", OracleDbType.Varchar2).Value = tableName;
 
-                // Thực thi câu lệnh
                 cmd.ExecuteNonQuery();
 
                 MessageBox.Show("Tài khoản được tạo thành công!");
