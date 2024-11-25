@@ -43,6 +43,7 @@ namespace NhatLinh_Tieuluan1
             string host = "localhost";
             string port = "1521";
             string sid = "orcl";
+            //string sid = "orcl2";
             string user = txt_user.Text;
             string pass = txt_pass.Text;
             if (Check_TextBox(user, pass))
@@ -57,8 +58,8 @@ namespace NhatLinh_Tieuluan1
                     //loadDataForm.Show();
                     //this.Hide();
 
-                    NV_MHNhan mhNhan = new NV_MHNhan();
-                    mhNhan.Show();
+                    FormTrangChu fTrangChu = new FormTrangChu();
+                    fTrangChu.Show();
                     this.Hide();
                 }
                 else

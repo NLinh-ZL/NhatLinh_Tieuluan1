@@ -33,7 +33,7 @@ namespace NhatLinh_Tieuluan1
 
             try
             {
-                Database.Set_Database("localhost", "1521", "orcl", "admin_user", "123");
+                Database.Set_Database("localhost", "1521", "orcl", "sys", "123");
 
                 if (!Database.Connect())
                 {

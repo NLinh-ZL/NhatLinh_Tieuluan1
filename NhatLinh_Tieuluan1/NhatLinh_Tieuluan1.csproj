@@ -61,7 +61,22 @@
     <Compile Include="DangNhap.Designer.cs">
       <DependentUpon>DangNhap.cs</DependentUpon>
     </Compile>
+    <Compile Include="DAO\rsa\RSAEncryption.cs" />
+    <Compile Include="DAO\ThanhVienDAO.cs" />
     <Compile Include="Database.cs" />
+    <Compile Include="DataProvider.cs" />
+    <Compile Include="FormQLThanhVien.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormQLThanhVien.Designer.cs">
+      <DependentUpon>FormQLThanhVien.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormTrangChu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormTrangChu.Designer.cs">
+      <DependentUpon>FormTrangChu.cs</DependentUpon>
+    </Compile>
     <Compile Include="LoadData.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,6 +96,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DangNhap.resx">
       <DependentUpon>DangNhap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormQLThanhVien.resx">
+      <DependentUpon>FormQLThanhVien.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormTrangChu.resx">
+      <DependentUpon>FormTrangChu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LoadData.resx">
       <DependentUpon>LoadData.cs</DependentUpon>
