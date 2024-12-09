@@ -259,5 +259,12 @@ namespace NhatLinh_Tieuluan1
             loadDataForm.Show();
             this.Hide();
         }
+
+        private void txt_mhlai_Click(object sender, EventArgs e)
+        {
+            NV_MHLai mhLai = new NV_MHLai();
+            mhLai.Show();
+            this.Hide();
+        }
     }
 }

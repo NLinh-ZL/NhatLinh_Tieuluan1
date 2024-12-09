@@ -41,5 +41,10 @@ namespace NhatLinh_Tieuluan1
         {
             OpenChildForm(new FormQLThanhVien());
         }
+
+        private void btn_Audit_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new Audit());
+        }
     }
 }

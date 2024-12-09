@@ -37,8 +37,9 @@
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
             this.panel_body = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btn_QLNhanVien = new System.Windows.Forms.Button();
             this.btn_QLThanhVien = new System.Windows.Forms.Button();
+            this.btn_QLNhanVien = new System.Windows.Forms.Button();
+            this.btn_Audit = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.panel_body.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -116,6 +117,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btn_Audit);
             this.panel1.Controls.Add(this.btn_QLThanhVien);
             this.panel1.Controls.Add(this.btn_QLNhanVien);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
@@ -123,17 +125,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(309, 428);
             this.panel1.TabIndex = 0;
-            // 
-            // btn_QLNhanVien
-            // 
-            this.btn_QLNhanVien.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_QLNhanVien.Location = new System.Drawing.Point(0, 162);
-            this.btn_QLNhanVien.Name = "btn_QLNhanVien";
-            this.btn_QLNhanVien.Size = new System.Drawing.Size(309, 59);
-            this.btn_QLNhanVien.TabIndex = 0;
-            this.btn_QLNhanVien.Text = "Quản lý nhân viên";
-            this.btn_QLNhanVien.UseVisualStyleBackColor = true;
-            this.btn_QLNhanVien.Click += new System.EventHandler(this.btn_QLNhanVien_Click);
             // 
             // btn_QLThanhVien
             // 
@@ -146,6 +137,28 @@
             this.btn_QLThanhVien.UseVisualStyleBackColor = true;
             this.btn_QLThanhVien.Click += new System.EventHandler(this.btn_QLThanhVien_Click);
             // 
+            // btn_QLNhanVien
+            // 
+            this.btn_QLNhanVien.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_QLNhanVien.Location = new System.Drawing.Point(0, 162);
+            this.btn_QLNhanVien.Name = "btn_QLNhanVien";
+            this.btn_QLNhanVien.Size = new System.Drawing.Size(309, 59);
+            this.btn_QLNhanVien.TabIndex = 0;
+            this.btn_QLNhanVien.Text = "Quản lý nhân viên";
+            this.btn_QLNhanVien.UseVisualStyleBackColor = true;
+            this.btn_QLNhanVien.Click += new System.EventHandler(this.btn_QLNhanVien_Click);
+            // 
+            // btn_Audit
+            // 
+            this.btn_Audit.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Audit.Location = new System.Drawing.Point(86, 313);
+            this.btn_Audit.Name = "btn_Audit";
+            this.btn_Audit.Size = new System.Drawing.Size(121, 47);
+            this.btn_Audit.TabIndex = 3;
+            this.btn_Audit.Text = "Audit";
+            this.btn_Audit.UseVisualStyleBackColor = true;
+            this.btn_Audit.Click += new System.EventHandler(this.btn_Audit_Click);
+            // 
             // FormTrangChu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -155,6 +168,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Name = "FormTrangChu";
             this.Text = "FormTrangChu";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.panel_body.ResumeLayout(false);
@@ -177,5 +191,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btn_QLThanhVien;
         private System.Windows.Forms.Button btn_QLNhanVien;
+        private System.Windows.Forms.Button btn_Audit;
     }
 }

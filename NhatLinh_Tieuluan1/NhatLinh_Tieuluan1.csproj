@@ -49,6 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Audit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Audit.Designer.cs">
+      <DependentUpon>Audit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dangky.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -83,6 +89,12 @@
     <Compile Include="LoadData.Designer.cs">
       <DependentUpon>LoadData.cs</DependentUpon>
     </Compile>
+    <Compile Include="NV_MHLai.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NV_MHLai.Designer.cs">
+      <DependentUpon>NV_MHLai.cs</DependentUpon>
+    </Compile>
     <Compile Include="NV_MHNhan.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,6 +103,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Audit.resx">
+      <DependentUpon>Audit.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dangky.resx">
       <DependentUpon>Dangky.cs</DependentUpon>
     </EmbeddedResource>
@@ -105,6 +120,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LoadData.resx">
       <DependentUpon>LoadData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NV_MHLai.resx">
+      <DependentUpon>NV_MHLai.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NV_MHNhan.resx">
       <DependentUpon>NV_MHNhan.cs</DependentUpon>

@@ -11,24 +11,14 @@ using System.Windows.Forms;
 
 namespace NhatLinh_Tieuluan1
 {
-    public partial class LoadData : Form
+    public partial class NV_MHLai : Form
     {
-        public LoadData()
+        public NV_MHLai()
         {
             InitializeComponent();
         }
 
-        private void LoadData_Load(object sender, EventArgs e)
-        {
-            txtKey.Value = 3;
-            LoadDataToGrid(applyEncryption: true);
-            btnEncrypt.Enabled = false;
-            btnDecrypt.Enabled = true;
-            txtKey.Enabled = false;
-
-        }
-
-        private void LoadDataToGrid(bool applyEncryption = false, int key = 3)
+        private void LoadDataToGrid(bool applyEncryption = false, int key = 5)
         {
             try
             {
@@ -72,8 +62,6 @@ namespace NhatLinh_Tieuluan1
             }
         }
 
-
-
         private void EncryptDataTable(DataTable dataTable, int key)
         {
             foreach (DataRow row in dataTable.Rows)
@@ -110,7 +98,6 @@ namespace NhatLinh_Tieuluan1
                 }
             }
         }
-
 
         private string CaesarCipherEncrypt36(string input, int key)
         {
@@ -155,6 +142,101 @@ namespace NhatLinh_Tieuluan1
             return decrypted.ToString();
         }
 
+
+
+        private void btnEncrypt_Click(object sender, EventArgs e)
+        {
+            // Kiểm tra nguồn dữ liệu từ DataGridView
+            if (dataGridView1.DataSource != null && dataGridView1.DataSource is DataTable dataTable)
+            {
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    if (!row.IsNull("MATKHAU"))
+                    {
+                        string plainText = row["MATKHAU"].ToString();
+                        string encryptedText = EncryptAddressInOracle(plainText); // Mã hóa MATKHAU
+                        row["MATKHAU"] = encryptedText;
+                    }
+                }
+
+                MessageBox.Show("Mã hóa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                btnEncrypt.Enabled = false;
+                btnDecrypt.Enabled = true;
+            }
+        }
+
+        private void btnDecrypt_Click(object sender, EventArgs e)
+        {
+            // Kiểm tra nguồn dữ liệu từ DataGridView
+            if (dataGridView1.DataSource != null && dataGridView1.DataSource is DataTable dataTable)
+            {
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    if (!row.IsNull("MATKHAU"))
+                    {
+                        string encryptedText = row["MATKHAU"].ToString();
+                        string decryptedText = DecryptAddressInOracle(encryptedText); // Giải mã MATKHAU
+                        row["MATKHAU"] = decryptedText;
+                    }
+                }
+
+                MessageBox.Show("Giải mã thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                btnEncrypt.Enabled = true;
+                btnDecrypt.Enabled = false;
+            }
+        }
+
+        private string EncryptAddressInOracle(string plainText)
+        {
+            using (OracleConnection conn = Database.Get_Connect()) // Sử dụng kết nối hiện tại
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("BEGIN :result := Crypto_Pkg.EncryptData(:plainText); END;", conn))
+                {
+                    cmd.Parameters.Add("plainText", OracleDbType.Varchar2).Value = plainText;
+                    cmd.Parameters.Add("result", OracleDbType.Raw, ParameterDirection.ReturnValue);
+
+                    cmd.ExecuteNonQuery();
+                    return BitConverter.ToString((byte[])cmd.Parameters["result"].Value).Replace("-", "");
+                }
+            }
+        }
+
+        private string DecryptAddressInOracle(string encryptedText)
+        {
+            using (OracleConnection conn = Database.Get_Connect()) // Sử dụng kết nối hiện tại
+            {
+                conn.Open();
+                using (OracleCommand cmd = new OracleCommand("BEGIN :result := Crypto_Pkg.DecryptData(:encryptedText); END;", conn))
+                {
+                    cmd.Parameters.Add("encryptedText", OracleDbType.Raw).Value = StringToByteArray(encryptedText);
+                    cmd.Parameters.Add("result", OracleDbType.Varchar2, ParameterDirection.ReturnValue);
+
+                    cmd.ExecuteNonQuery();
+                    return cmd.Parameters["result"].Value.ToString();
+                }
+            }
+        }
+
+
+        private byte[] StringToByteArray(string hex)
+        {
+            return Enumerable.Range(0, hex.Length / 2)
+                             .Select(x => Convert.ToByte(hex.Substring(x * 2, 2), 16))
+                             .ToArray();
+        }
+
+
+
+        private void txt_mhlai_Click(object sender, EventArgs e)
+        {
+            LoadData loadDataForm = new LoadData();
+            loadDataForm.Show();
+            this.Hide();
+        }
+
         private void btn_logout_Click(object sender, EventArgs e)
         {
             if (Database.Get_Connect() != null && Database.Get_Connect().State == ConnectionState.Open)
@@ -168,57 +250,13 @@ namespace NhatLinh_Tieuluan1
             this.Close();
         }
 
-        private void btnEncrypt_Click(object sender, EventArgs e)
+        private void NV_MHLai_Load(object sender, EventArgs e)
         {
-            int key = (int)txtKey.Value;
-            if (key < 1 || key > 36)
-            {
-                MessageBox.Show("Khóa phải nằm trong khoảng từ 1 đến 36.", "Lỗi khóa", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            if (dataGridView1.DataSource != null && dataGridView1.DataSource is DataTable)
-            {
-                DataTable dataTable = (DataTable)dataGridView1.DataSource;
-                EncryptDataTable(dataTable, key); 
-                btnEncrypt.Enabled = false;
-                btnDecrypt.Enabled = true;
-                txtKey.Enabled = false;
-            }
-
-        }
-
-        private void btnDecrypt_Click(object sender, EventArgs e)
-        {
-            int key = (int)txtKey.Value;
-            if (key < 1 || key > 36)
-            {
-                MessageBox.Show("Khóa phải nằm trong khoảng từ 1 đến 36.", "Lỗi khóa", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            if (dataGridView1.DataSource != null && dataGridView1.DataSource is DataTable)
-            {
-                DataTable dataTable = (DataTable)dataGridView1.DataSource;
-                DecryptDataTable(dataTable, key); 
-                btnEncrypt.Enabled = true;
-                btnDecrypt.Enabled = false;
-                txtKey.Enabled = true;
-            }
-        }
-
-        private void txt_mhnhan_Click(object sender, EventArgs e)
-        {
-            NV_MHNhan mhNhan = new NV_MHNhan();
-            mhNhan.Show();
-            this.Hide();
-        }
-
-        private void txt_mhlai_Click(object sender, EventArgs e)
-        {
-            NV_MHLai mhLai = new NV_MHLai();
-            mhLai.Show();
-            this.Hide();
+            txtKey.Value = 3;
+            LoadDataToGrid(applyEncryption: true);
+            btnEncrypt.Enabled = false;
+            btnDecrypt.Enabled = true;
+            txtKey.Enabled = false;
         }
     }
 }

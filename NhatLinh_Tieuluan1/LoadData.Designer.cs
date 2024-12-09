@@ -36,6 +36,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtKey = new System.Windows.Forms.NumericUpDown();
             this.txt_mhnhan = new System.Windows.Forms.Button();
+            this.txt_mhlai = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtKey)).BeginInit();
             this.SuspendLayout();
@@ -55,6 +56,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 95);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(1093, 313);
             this.dataGridView1.TabIndex = 2;
@@ -117,11 +119,22 @@
             this.txt_mhnhan.UseVisualStyleBackColor = true;
             this.txt_mhnhan.Click += new System.EventHandler(this.txt_mhnhan_Click);
             // 
+            // txt_mhlai
+            // 
+            this.txt_mhlai.Location = new System.Drawing.Point(651, 424);
+            this.txt_mhlai.Name = "txt_mhlai";
+            this.txt_mhlai.Size = new System.Drawing.Size(141, 46);
+            this.txt_mhlai.TabIndex = 11;
+            this.txt_mhlai.Text = "Mã hóa lai";
+            this.txt_mhlai.UseVisualStyleBackColor = true;
+            this.txt_mhlai.Click += new System.EventHandler(this.txt_mhlai_Click);
+            // 
             // LoadData
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1117, 482);
+            this.Controls.Add(this.txt_mhlai);
             this.Controls.Add(this.txt_mhnhan);
             this.Controls.Add(this.txtKey);
             this.Controls.Add(this.label2);
@@ -150,5 +163,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown txtKey;
         private System.Windows.Forms.Button txt_mhnhan;
+        private System.Windows.Forms.Button txt_mhlai;
     }
 }
